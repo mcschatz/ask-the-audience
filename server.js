@@ -24,14 +24,14 @@ var votes = {};
 io.on('connection', function(socket) {
   console.log('A user has connected.', io.engine.clientsCount);
 
-  io.sockets.emit('usersConnected', io.engine.clientsCount);
+  io.sockets.emit('usersConnected', "hi");
 
   socket.emit('statusMessage', 'You have connected.');
 
   socket.on('message', function (channel, message) {
     if (channel === 'voteCast') {
       votes[socket.id] = message;
-      socket.emit('voteCount', countVotes(votes));
+      io.sockets.emit('voteCount', countVotes(votes));
     }
   });
 
